@@ -68,19 +68,17 @@ func getDefaultConfig(name, fallback string) string {
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=UTF-8")
-	values := getEnvironKeyValues()
+	values := getKeyValues()
 	if err := tmpl.Execute(w, values); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
-func getEnvironKeyValues() KeyValues {
-	environ := os.Environ()
-	keyValues := make(KeyValues, len(environ))
-	for i, kv := range environ {
-		keyValues[i] = newKeyValue(kv)
-	}
-	return keyValues
+func getKeyValues() KeyValues {
+	result := make(KeyValues, 2)
+	result[0] = &KeyValue{"PORT", os.Getenv("PORT")}
+	result[1] = &KeyValue{"HELLO_VERSION", os.Getenv("HELLO_VERSION")}
+	return result
 }
 
 func newKeyValue(kv string) *KeyValue {
