@@ -68,6 +68,7 @@ func getDefaultConfig(name, fallback string) string {
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=UTF-8")
+	w.Header().Set("Cache-Control", "private, no-cache, no-store, must-revalidate")
 	values := getKeyValues()
 	if err := tmpl.Execute(w, values); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
