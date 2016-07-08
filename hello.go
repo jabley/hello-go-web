@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"html/template"
 	"log"
@@ -47,12 +48,20 @@ type KeyValues []*KeyValue
 
 var (
 	tmpl = template.Must(template.New("index.html").Parse(indexHTML))
+	body []byte
 )
 
 func main() {
 	flag.Parse()
 
 	port := getDefaultConfig("PORT", "8080")
+
+	values := getKeyValues()
+	var b bytes.Buffer
+	if err := tmpl.Execute(&b, values); err != nil {
+		panic(err)
+	}
+	body = b.Bytes()
 
 	http.HandleFunc("/", mainHandler)
 
@@ -69,10 +78,7 @@ func getDefaultConfig(name, fallback string) string {
 func mainHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=UTF-8")
 	w.Header().Set("Cache-Control", "private, no-cache, no-store, must-revalidate")
-	values := getKeyValues()
-	if err := tmpl.Execute(w, values); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+	w.Write(body)
 }
 
 func getKeyValues() KeyValues {
