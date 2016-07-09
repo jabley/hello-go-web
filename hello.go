@@ -129,6 +129,7 @@ func main() {
 	body = b.Bytes()
 
 	http.HandleFunc("/", mainHandler)
+	http.HandleFunc("/_status", statusHandler)
 
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
@@ -144,6 +145,12 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=UTF-8")
 	w.Header().Set("Cache-Control", "private, no-cache, no-store, must-revalidate")
 	w.Write(body)
+}
+
+func statusHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Cache-Control", "private, no-cache, no-store, must-revalidate")
+	w.WriteHeader(http.StatusOK)
 }
 
 func getKeyValues() KeyValues {
