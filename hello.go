@@ -25,38 +25,56 @@ const (
 			}
 			#footer ul li {
     			display: inline-block;
-    			margin: 0 15px 0 0;
+    			margin: 0 15px 15px 0;
 			}
 			#overview p {
-				margin: 0 30px 0 30px;
+				margin: 0 25px 0 25px;
+			}
+			.floated-inner-block {
+				margin: 0 25px;
 			}
 			.homepage-top {
-				text-align: center;
     			background: #005ea5;
     			color: #fff;
 			}
-			.values-list li {
-				display: list-item;
-				list-style: none;
+			.homepage-top h1 {
+				font-family: Arial, sans-serif;
+    			font-size: 32px;
+    			line-height: 1.09375;
+    			text-transform: none;
+    			font-size-adjust: 0.5;
+    			font-weight: bold;
+    			padding: 25px 0 15px;
 			}
-			.values-list li h3 {
-    			font-size: 19px;
-    			line-height: 1.31579;
-    		}
     		.values-list table {
 				text-align: center;
 				width: 80%;
+			}
+			@media (min-width: 641px) {
+				.values-list table {
+    				font-size: 32px;
+    				line-height: 1.31579;
+    			}
     		}
 			.visuallyhidden {
  			   position: absolute;
     			left: -9999em;
 			}
+			p {
+				font-family: Arial, sans-serif;
+    			font-size: 16px;
+				line-height: 1.25;
+    			font-weight: 400;
+    			text-transform: none;
+			}
 		</style>
 	</head>
 	<body>
 		<header class="homepage-top">
-			<h1>Welcome!</h1>
-			<p>A simple 12-factor app showing some environment configuration.</p>
+			<div class="floated-inner-block">
+				<h1>Welcome!</h1>
+				<p>A simple 12-factor app showing some environment configuration.</p>
+			</div>
 		</header>
 		<main>
 			<section id="overview" aria-labelledby="overview-label">
