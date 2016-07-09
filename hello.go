@@ -13,26 +13,91 @@ import (
 const (
 	indexHTML = `<!DOCTYPE html>
 <html>
-<head>
-<title>Hello World!</title>
-</head>
-<body>
-<article>
-<h1>Simple app showing environmental variables</h1>
-<table>
-<tr>
-<th>key</th>
-<th>value</th>
-</tr>
-{{range .}}
-<tr>
-<td>{{.Key}}</td>
-<td>{{.Value}}</td>
-</tr>
-{{end}}
-</table>
-</article>
-</body>
+	<head>
+		<title>Welcome to my service</title>
+		<style type="text/css">
+			#footer {
+				border-top: 10px solid #005ea5;
+			    background-color: #dee0e2;
+			}
+			#footer ul {
+				list-style: none;
+			}
+			#footer ul li {
+    			display: inline-block;
+    			margin: 0 15px 0 0;
+			}
+			#overview p {
+				margin: 0 30px 0 30px;
+			}
+			.homepage-top {
+				text-align: center;
+    			background: #005ea5;
+    			color: #fff;
+			}
+			.values-list li {
+				display: list-item;
+				list-style: none;
+			}
+			.values-list li h3 {
+    			font-size: 19px;
+    			line-height: 1.31579;
+    		}
+    		.values-list table {
+				text-align: center;
+				width: 80%;
+    		}
+			.visuallyhidden {
+ 			   position: absolute;
+    			left: -9999em;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="homepage-top">
+			<h1>Welcome!</h1>
+			<p>A simple 12-factor app showing some environment configuration.</p>
+		</header>
+		<main>
+			<section id="overview" aria-labelledby="overview-label">
+				<h2 id="overview-label" class="visuallyhidden">Overview</h2>
+				<p>Typically, this application is run in multiple hosting providers, with different values for <code>HELLO_VERSION</code> in each provider.</p>
+				<p>This makes it possible to front the application with a CDN / load-balancer and see different values coming back depending on which origin served the request.</p>
+				<p>It also allows you to demonstrate zero-downtime failover of the CDN/load-balancer, if suitably configured.</p>
+			</section>
+			<section id="environment-variables" aria-labelledby="environment-variables-label">
+				<h2 id="environment-variables-label" class="visuallyhidden">Selected environment variables</h2>
+				<div class="values-list">
+					<table>
+						<thead>
+							<tr>
+								<th width="50%">Key</th>
+								<th width="50%">Value</th>
+							</tr>
+						</thead>
+						<tbody>
+
+					{{range .}}
+						<tr>
+							<td>{{.Key}}</td>
+							<td>{{.Value}}</td>
+						</tr>
+					{{end}}
+						</tbody>
+					</table>
+				</div>
+			</section>
+		</main>
+		<footer id="footer">
+			<div class="footer-meta">
+				<h2 class="visuallyhidden">Support links</h2>
+				<ul>
+					<li><a href="https://github.com/jabley/hello-go-web">Source</a></li>
+					<li>Built by <a href="https://twitter.com/jabley">James Abley</a></li>
+				</ul>
+			</div>
+		</footer>
+	</body>
 </html>
 `
 )
