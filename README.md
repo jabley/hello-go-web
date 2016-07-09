@@ -9,7 +9,7 @@ cf push -f manifests/us.yml
 ```
 
 That should create an application in a Cloud Foundry provider. From that
-manifest, the app should be named hello-go-web.
+manifest, the app should be named `hello-go-web`.
 
 ## Consistent Routing
 
@@ -23,10 +23,10 @@ First, register the domain example.com in Cloud Foundry:
 cf create-domain my-org example.com
 ```
 
-Create a route so that requests to hello-go-web.example.com are recognised:
+Create a route so that requests to `hello-go-web.example.com` are recognised:
 
 ```
-cf create-route my-space example.com  --hostname hello-go-web
+cf create-route my-space example.com --hostname hello-go-web
 ```
 
 Finally, map the route to your recently pushed application:
@@ -51,7 +51,7 @@ tier with TLS.
 
 ### Create a service
 
-1. Host of hello-go-web.cfapps.io (if that's where your app is running on Cloud Foundry)
+1. Host of `hello-go-web.cfapps.io` (if that's where your app is running in a Cloud Foundry provider)
 1. Domain of `foo.global.ssl.fastly.net` where `foo` is any available word
 
 ### Create a Healthcheck
