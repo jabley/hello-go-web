@@ -1,0 +1,11 @@
+---
+applications:
+- name: hello-go-web
+  instances: 2
+  memory: 16M
+  disk_quota: 32M
+  stack: cflinuxfs2
+  buildpack: https://github.com/cloudfoundry/go-buildpack.git
+  env:
+    HELLO_VERSION: pcf-1
+    GOPACKAGENAME: hello-go-web
