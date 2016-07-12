@@ -46,16 +46,10 @@ const (
     			font-weight: bold;
     			padding: 25px 0 15px;
 			}
-    		.values-list table {
-				text-align: center;
-				width: 80%;
+			.values-list ul {
+				list-style: none;
+    			padding: 0 25px;
 			}
-			@media (min-width: 641px) {
-				.values-list table {
-    				font-size: 32px;
-    				line-height: 1.31579;
-    			}
-    		}
 			.visuallyhidden {
  			   position: absolute;
     			left: -9999em;
@@ -86,23 +80,13 @@ const (
 			<section id="environment-variables" aria-labelledby="environment-variables-label">
 				<h2 id="environment-variables-label" class="visuallyhidden">Selected environment variables</h2>
 				<div class="values-list">
-					<table>
-						<thead>
-							<tr>
-								<th width="50%">Key</th>
-								<th width="50%">Value</th>
-							</tr>
-						</thead>
-						<tbody>
-
+					<ul>
 					{{range .}}
-						<tr>
-							<td>{{.Key}}</td>
-							<td>{{.Value}}</td>
-						</tr>
+						<li>
+							<code>{{.Key}}</code> : {{.Value}}
+						</li>
 					{{end}}
-						</tbody>
-					</table>
+					</ul>
 				</div>
 			</section>
 		</main>
