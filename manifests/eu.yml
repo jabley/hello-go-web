@@ -7,5 +7,5 @@ applications:
   stack: cflinuxfs2
   buildpack: https://github.com/cloudfoundry/go-buildpack.git
   env:
-    HELLO_VERSION: eu-1
+    PROVIDER: eu-1
     GOPACKAGENAME: hello-go-web

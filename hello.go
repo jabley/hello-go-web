@@ -73,7 +73,7 @@ const (
 		<main>
 			<section id="overview" aria-labelledby="overview-label">
 				<h2 id="overview-label" class="visuallyhidden">Overview</h2>
-				<p>Typically, this application is run in multiple hosting providers, with different values for <code>HELLO_VERSION</code> in each provider.</p>
+				<p>Typically, this application is run in multiple hosting providers, with different values for <code>PROVIDER</code> in each provider.</p>
 				<p>This makes it possible to front the application with a CDN / load-balancer and see different values coming back depending on which origin served the request.</p>
 				<p>It also allows you to demonstrate zero-downtime failover of the CDN/load-balancer, if suitably configured.</p>
 			</section>
@@ -158,7 +158,7 @@ func statusHandler(w http.ResponseWriter, r *http.Request) {
 func getKeyValues() KeyValues {
 	result := make(KeyValues, 2)
 	result[0] = &KeyValue{"PORT", os.Getenv("PORT")}
-	result[1] = &KeyValue{"HELLO_VERSION", os.Getenv("HELLO_VERSION")}
+	result[1] = &KeyValue{"PROVIDER", os.Getenv("PROVIDER")}
 	return result
 }
 
