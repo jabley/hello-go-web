@@ -1,7 +1,7 @@
 ---
 applications:
 - name: hello-go-web
-  instances: 2
+  instances: 1
   memory: 16M
   disk_quota: 32M
   stack: cflinuxfs2
