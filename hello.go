@@ -2,11 +2,13 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"flag"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
+	"runtime"
 	"strings"
 )
 
@@ -153,6 +155,9 @@ func statusHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "private, no-cache, no-store, must-revalidate")
 	w.WriteHeader(http.StatusOK)
+	var mem runtime.MemStats
+	runtime.ReadMemStats(&mem)
+	json.NewEncoder(w).Encode(mem)
 }
 
 func getKeyValues() KeyValues {
