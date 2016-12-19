@@ -4,12 +4,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"flag"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
 	"runtime"
 	"strings"
+	"syscall"
 )
 
 const (
@@ -135,7 +138,27 @@ func main() {
 	http.HandleFunc("/", mainHandler)
 	http.HandleFunc("/_status", statusHandler)
 
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	errorChan := make(chan error, 1)
+	signalChan := make(chan os.Signal, 1)
+
+	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
+
+	go func() {
+		errorChan <- http.ListenAndServe(":"+port, nil)
+	}()
+
+	for {
+		select {
+		case err := <-errorChan:
+			if err != nil {
+				log.Fatal(err)
+			}
+		case s := <-signalChan:
+			log.Println(fmt.Sprintf("Captured %v. Exiting ...", s))
+			// TOOD(jabley): shut down HTTP server cleanly
+			os.Exit(0)
+		}
+	}
 }
 
 func getDefaultConfig(name, fallback string) string {
