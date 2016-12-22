@@ -13,6 +13,7 @@ import (
 	"runtime"
 	"strings"
 	"syscall"
+	"time"
 )
 
 const (
@@ -135,8 +136,19 @@ func main() {
 	}
 	body = b.Bytes()
 
-	http.HandleFunc("/", mainHandler)
-	http.HandleFunc("/_status", statusHandler)
+	serveMux := http.NewServeMux()
+
+	serveMux.HandleFunc("/", mainHandler)
+	serveMux.HandleFunc("/_status", statusHandler)
+
+	srv := &http.Server{
+		Addr: ":"+port,
+		ReadTimeout:  5 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		// New for Go 1.8
+		// IdleTimeout:  120 * time.Second,
+		Handler: serveMux,
+	}
 
 	errorChan := make(chan error, 1)
 	signalChan := make(chan os.Signal, 1)
@@ -144,7 +156,7 @@ func main() {
 	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
 
 	go func() {
-		errorChan <- http.ListenAndServe(":"+port, nil)
+		errorChan <- srv.ListenAndServe()
 	}()
 
 	for {
