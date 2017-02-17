@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -142,12 +143,11 @@ func main() {
 	serveMux.HandleFunc("/_status", statusHandler)
 
 	srv := &http.Server{
-		Addr: ":"+port,
+		Addr:         ":" + port,
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
-		// New for Go 1.8
-		// IdleTimeout:  120 * time.Second,
-		Handler: serveMux,
+		IdleTimeout:  120 * time.Second,
+		Handler:      serveMux,
 	}
 
 	errorChan := make(chan error, 1)
@@ -167,7 +167,10 @@ func main() {
 			}
 		case s := <-signalChan:
 			log.Println(fmt.Sprintf("Captured %v. Exiting ...", s))
-			// TOOD(jabley): shut down HTTP server cleanly
+			d := time.Now().Add(1 * time.Second)
+			ctx, cancel := context.WithDeadline(context.Background(), d)
+			defer cancel()
+			srv.Shutdown(ctx)
 			os.Exit(0)
 		}
 	}
