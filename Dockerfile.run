@@ -1,0 +1,5 @@
+FROM joeshaw/busybox-nonroot
+EXPOSE 8080
+USER nobody
+COPY hello-go-web /bin/hello-go-web
+CMD ["/bin/hello-go-web"]
