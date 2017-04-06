@@ -9,7 +9,7 @@ COPY . .
 RUN go build ./...
 
 # Run the application.
-ENTRYPOINT ["/opt/hello-go/hello-go-web"]
+ENTRYPOINT ["/opt/hello-go/hello-go"]
 
 # You can test this Docker image locally by running:
 #
